@@ -1,1 +1,5 @@
-/.project
+.project
+__pycache__
+.pydevproject
+build/
+.ipynb_checkpoints
