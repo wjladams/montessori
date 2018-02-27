@@ -32,7 +32,7 @@ terra.registerCA({
 gameOfLife.grid = gameOfLife.makeGrid('GoL');
 //gameOfLife.animate();
 running = false;
-function myFunction() {
+function playPause() {
   if (running) {
     gameOfLife.stop();
     running = false;
@@ -41,8 +41,17 @@ function myFunction() {
     running = true;
   }
 };
+function reset() {
+	if (running) {
+		gameOfLife.stop();
+		running = false;
+	}
+	gameOfLife.grid = gameOfLife.makeGrid('GoL');
+	gameOfLife.draw();
+};
   </script>
   <p></p>
-    <button onclick="myFunction()">Click me</button>
+    <button onclick="playPause()">Play/Pause</button>
+    <button onclick="reset()">Reset</button>
 </body>
 </html>
