@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sim1</title>
+  </head>
+<body>
+<script src="https://cdn.jsdelivr.net/terra/latest/mainfile"></script>
+  <h1>Sim1</h1>
+  <p></p>
+  <script>
+  terra.registerCreature({
+    type: 'secondCreature',
+    color: [120, 0, 240],
+    sustainability: 6,
+    reproduceLv: 1
+  });
+    // create a simple plant creature
+  terra.registerCreature({
+    type: 'simplePlant',
+    color: [166, 226, 46],
+    size: 10,
+    reproduceLv: 0.8,
+    wait: function() { this.energy += 3; },
+    move: false
+  });
+
+  // initialize our environment
+  var ex1 = new terra.Terrarium(25, 25, {id: 'ex1'});
+  ex1.grid = ex1.makeGridWithDistribution([['secondCreature', 10], ['simplePlant', 90]]);
+  var gameOfLife = ex1;
+  //gameOfLife.animate();
+running = false;
+function playPause() {
+  if (running) {
+    gameOfLife.stop();
+    running = false;
+  } else {
+    gameOfLife.animate();
+    running = true;
+  }
+};
+function reset() {
+	if (running) {
+		gameOfLife.stop();
+		running = false;
+	}
+  ex1.grid = ex1.makeGridWithDistribution([['secondCreature', 10], ['simplePlant', 90]]);
+	gameOfLife.draw();
+};
+  </script>
+  <p></p>
+    <button onclick="playPause()">Play/Pause</button>
+    <button onclick="reset()">Reset</button>
+</body>
+</html>
