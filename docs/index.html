@@ -31,12 +31,14 @@ terra.registerCA({
 
 gameOfLife.grid = gameOfLife.makeGrid('GoL');
 //gameOfLife.animate();
-running = 0;
+running = false;
 function myFunction() {
-  if (runnings) {
+  if (running) {
     gameOfLife.stop();
+    running = false;
   } else {
     gameOfLife.animate();
+    running = true;
   }
 };
   </script>
