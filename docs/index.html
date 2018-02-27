@@ -7,6 +7,7 @@
 <script src="//cdn.jsdelivr.net/terra/latest/mainfile"></script>
   <h1>Something the so and so</h1>
   This is a test, of sorts
+  <p>
   <script>
   var gameOfLife = new terra.Terrarium(25, 25, {
   trails: 0.9,
@@ -30,6 +31,11 @@ terra.registerCA({
 
 gameOfLife.grid = gameOfLife.makeGrid('GoL');
 gameOfLife.animate();
+function myFunction() {
+  gameOfLife.stop();
+}
   </script>
+  <p></p>
+    <button onclick="myFunction()">Click me</button>
 </body>
 </html>
