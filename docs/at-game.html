@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>treasure</title>
+</head>
+
+<body>
+  <h1 id= "heading">find the treasure</h1>
+  <p><b>Hint:</b> <p id="distance" ></p>
+
+  <img id= "map" width=500 height=500
+       src="https://www.timvandevall.com/wp-content/uploads/Pirate-Treasure-Map.png">
+  <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+  <script>
+    var getrandomnumber = function(size){
+      return Math.floor(Math.random()* size);
+    };
+
+    var width = 500;
+    var height = 500;
+    var target = {
+      x: getrandomnumber(width),
+      y: getrandomnumber(height)
+    };
+
+
+    var clicks = 0;
+
+    $("#map").click(
+      function(event) {
+        var distance = getdistance(event, target);
+        var distancehint = getdistancehint(distance);
+        $("#distance").text(distancehint);
+        console.log("Working "+distance);
+        clicks++;
+      }
+    );
+
+
+
+
+    var getdistance = function(event, target) {
+      var diffx = event.offsetX - target.x;
+      var diffy = event.offsetY - target.y;
+      return Math.sqrt((diffx * diffx) + (diffy * diffy));
+    };
+
+
+
+    var getdistancehint = function (distance) {
+      if (distance < 10){
+        return "SUPERHOT";
+      } else if (distance < 20){
+        return "U close";
+      } else if (distance < 40){
+        return "hot";
+      }    else if (distance < 80){
+        return "warm";
+      }  else if (distance < 160){
+        return "lukewarm";
+      } else if (distance < 320){
+        return "coldboi";
+      }  else  {
+        return "lolwreckt";
+        }
+      }
+
+
+    </script>
+</body>
+
+</html>
