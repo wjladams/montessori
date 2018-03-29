@@ -6,8 +6,8 @@
   <title>treasure</title>
 </head>
 
-<body>
-  <h1 id= "heading">i'm following you</h1>
+<body><a id="heading" href="at-game.html">
+  <h1>i'm following you</h1></a>
 
 
   <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
@@ -15,8 +15,8 @@
 
  $("html").mousemove(function (event){
    $("#heading").offset ({
-     left: event.pageX,
-     top: event.pageY
+     left: event.pageX - 30,
+     top: event.pageY - 30
    });
  });
 
