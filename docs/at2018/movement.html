@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>treasure</title>
+</head>
+
+<body>
+  <h1 id= "heading">find the treasure</h1>
+  <p><b>Hint:</b> <p id="distance" ></p>
+
+  <img id= "map" width=500 height=500
+       src="https://www.timvandevall.com/wp-content/uploads/Pirate-Treasure-Map.png">
+  <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+  <script>
+    var getrandomnumber = function(size){
+      return Math.floor(Math.random()* size);
+    };
+
+
+var leftoffset = 0;
+
+var rightoffset = 0;
+
+ var movemapleft = function () {
+   $("#map").offset({left: leftoffset});
+
+    $("#map").offset({right: rightoffset});
+
+   leftoffset++;
+
+
+   if (leftoffset > 200) {
+     leftoffset = 0
+   }
+ };
+
+
+
+
+
+
+ setInterval(movemapleft, 15);
+
+    </script>
+
+</body>
+
+</html>
