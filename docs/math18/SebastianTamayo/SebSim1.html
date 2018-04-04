@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta name="description" content="Simulator 1 Plant and Animal -- Noisey Plants">
+    <title>Sim1</title>
+  </head>
+<body>
+<script src="https://cdn.jsdelivr.net/terra/latest/mainfile"></script>
+  <h1>Sebastian1</h1>
+  <p></p>
+  <script>
+    var size = 40;
+  terra.registerCreature({
+    type: 'secondCreature',
+    color: [0, 0, 240],
+    sustainability: 1,
+    reproduceLv: 0.1
+  });
+    terra.registerCreature({
+    type: 'sebastian',
+    color: [240, 0, 0],
+    sustainability: 6,
+    reproduceLv: 5,
+    size: 200,
+    character: '( ͡° ͜ʖ ͡°)'
+  });
+    // create a simple plant creature
+  terra.registerCreature({
+    type: 'simplePlant',
+    color: [166, 226, 46],
+    size: 2,
+    reproduceLv: 0.5,
+    wait: function() { this.energy += 2*Math.random() - 0; },
+    move: false
+  });
+  // initialize our environment
+  var plantCount = 60;
+  var sebCount =20
+  var animalCount = 10;
+  var ex1 = new terra.Terrarium(size, size, {
+    id: 'ex1',
+    periodic: 1
+  });
+  ex1.grid = ex1.makeGridWithDistribution([
+    ['secondCreature', animalCount], 
+    ['simplePlant', plantCount],
+    ['sebastian', sebCount]
+  ]);
+  var gameOfLife = ex1;
+  //gameOfLife.animate();
+running = false;
+function playPause() {
+  if (running) {
+    gameOfLife.stop();
+    running = false;
+  } else {
+    gameOfLife.animate();
+    running = true;
+  }
+};
+function reset() {
+	if (running) {
+		gameOfLife.stop();
+		running = false;
+	}
+  ex1.grid = ex1.makeGridWithDistribution([
+    ['secondCreature', animalCount], 
+    ['simplePlant', plantCount],
+    ['sebastian', sebCount]
+  ]);
+	gameOfLife.draw();
+};
+  </script>
+  <p></p>
+    <button onclick="playPause()">Play/Pause</button>
+    <button onclick="reset()">Reset</button>
+</body>
+</html>
