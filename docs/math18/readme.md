@@ -4,4 +4,4 @@ The work is
 * [Aiden Tamayo's Javascript Projects](AidenTamayo)
 * [Sebastian Tamayo's Cellular Automata Work](SebastianTamayo)
 * [Will Adams' Satellite and Orbital Simulations](WillAdams)
-* [Colin Player's Program to calculate project angles](ConlinPlayer)
+* [Colin Player's Program to calculate projectile angles](ConlinPlayer)
