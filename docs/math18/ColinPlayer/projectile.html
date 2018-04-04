@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Distance Angle calculation</title>
+  </head>
+<body>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.4.3.min.js" ></script>
+  <h1>Angle calculation</h1>
+  <table>
+    <tr><td>Muzzle Velocity:</td><td> <input type="text" id="mvel"></td></tr>
+    <tr><td>Target Distance (in meters):</td> <td><input type="text" id="d"></td></tr>
+    <tr><td><b>Maximum dist for velocity</b></td><td><div id="max">Not calculated</div></td></tr>
+    <tr><td><b>Angle Required</b></td><td><div id="result">Not calculated</div></td></tr>
+  </table>
+  <button onclick="submit()">Update Calculation</button>
+  <script>
+  function precisionRound(number, precision) {
+    var factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
+  }
+  function submit() {
+    var mvel = $('#mvel').val();
+    var d = $('#d').val();
+    var a = 9.8;
+    var arg = a*d/(mvel*mvel);
+    var result = "No solution possible";
+    if (Math.abs(arg) <= 1) {
+      var angle = Math.asin(arg) / 2;
+      //Need to convert to degrees
+      angle *= 180 / Math.PI;
+      angle = precisionRound(angle, 3);
+      result = angle + " degrees";
+    } else {
+      //Cannot happen
+      //already handled
+    }
+    $("#result").text(result);
+    var max_dist = Math.round(mvel * mvel / a);
+    $("#max").text(max_dist+" meters");
+  }
+  </script>
+
+</body>
+</html>
