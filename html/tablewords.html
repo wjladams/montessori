@@ -21,6 +21,26 @@ Size <input id="size" value="20"></input>
 </section>
 
 <script>
+  function selectElementContents(el) {
+	var body = document.body, range, sel;
+	if (document.createRange && window.getSelection) {
+		range = document.createRange();
+		sel = window.getSelection();
+		sel.removeAllRanges();
+		try {
+			range.selectNodeContents(el);
+			sel.addRange(range);
+		} catch (e) {
+			range.selectNode(el);
+			sel.addRange(range);
+		}
+	} else if (body.createTextRange) {
+		range = body.createTextRange();
+		range.moveToElementText(el);
+		range.select();
+	}
+}
+
 function myaction(evt) {
   let text = $("#ta").val();
   var textes = text.split(/ +/);
@@ -33,7 +53,7 @@ function myaction(evt) {
   for (var i = 0; i < textes.length; i++) {
     var cell = row.insertCell();
     cell.innerHTML = textes[i];
-    console.log(textes[i]);
+    //console.log(textes[i]);
     count = count + 1;
     if (count == size) {
       count = 0;
@@ -44,7 +64,9 @@ function myaction(evt) {
       break;
     }
   }
-  alert(textes.length);
+  selectElementContents(tbl);
+  document.execCommand('copy');
+  alert("Table copied, you can paste into a spreadsheet if you like");
 }
 
 </script>
