@@ -1,0 +1,53 @@
+<html>
+<head>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<header>Make word table</header>
+<section>
+<textarea id="ta" rows="20" cols="80">Merv Bodnarchuk peeled a crisp new hundred-dollar bill from the wad of cash he kept tucked in the pocket of his curling pants and he ordered another round: two bottles of Pilsner for me, two cans of Coors Light and two glasses of Clamato juice for him. He poured the beer and juice, mixed half and half, into another glass to make a concoction he called a Clam’s Eye. He took a long tug on the blood-red drink, and told me to hurry and down my Pilsners; he was ready to order another double round. It was late, nearing closing time on a Thursday night in early December, and JB’s Lounge in the Black Knight Inn in Red Deer, Alberta, was packed with the world’s finest curlers, in town for the Skyreach Curling Classic IV. Famous athletes, of a kind, they sat drinking Molson Canadian and rye and Cokes and Paralyzers, filling ashtrays with stubbed-out du Mauriers, discussing life on the bonspiel circuit. They were dressed in nylon sweatsuits and curling jackets with the names of hometown car dealerships and grain-supply companies stitched on the chest. The chubby, rosy-cheeked members of the Harris team, from Toronto, Olympic silver medal winners in 1998, stood propping up the bar in the red Nagano Team Canada winter jackets, which they insisted on wearing inside, despite the close, smoky warmth of JB’s. The curlers had converged on Red Deer from small towns and cities across the prairies and Rockies and eastern provinces, just as curlers have come together to play almost since these parts were first settled.
+</textarea>
+</section>
+<section>
+Size <input id="size" value="20"></input>
+</section>
+<section>
+<button id="action" onclick="myaction()">Make Grid</button>
+</section>
+<section>
+  <h1>The table</h1>
+  <table id="table" border="2"> </table>
+
+</section>
+
+<script>
+function myaction(evt) {
+  let text = $("#ta").val();
+  var textes = text.split(/ +/);
+  var tbl = document.getElementById('table');
+  tbl.innerHTML="";
+  var row = tbl.insertRow();
+  var size = $("#size").val();
+  var count=0;
+  var rowCount=0;
+  for (var i = 0; i < textes.length; i++) {
+    var cell = row.insertCell();
+    cell.innerHTML = textes[i];
+    console.log(textes[i]);
+    count = count + 1;
+    if (count == size) {
+      count = 0;
+      rowCount = rowCount + 1;
+      row = tbl.insertRow();
+    }
+    if (rowCount >= size) {
+      break;
+    }
+  }
+  alert(textes.length);
+}
+
+</script>
+</body>
+
+</html>
