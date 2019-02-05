@@ -1,0 +1,64 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>Find the waffle cat</title>
+</head>
+<body>
+  <h1 id="heading"> Find the waffle cat</h1>
+  <img id= "map" width=400 width=400
+  src="https://www.telegraph.co.uk/content/dam/pets/2017/01/06/1-JS117202740-yana-two-face-cat-news_trans_NvBQzQNjv4BqJNqHJA5DVIMqgv_1zKR2kxRY9bnFVTp4QZlQjJfe6H0.jpg?imwidth=450">
+  <p id= "distance"></p>
+  <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+  <script>
+  var getRandomNumber = function(size) {
+return Math.floor(Math.random() * size);
+};
+var getDistance= function (event, target) {
+  var diffx = event.offsetX - target.x;
+  var diffy = event.offsetY - target.y;
+  return Math.sqrt ((diffx *diffx)+diffy*diffy)
+
+};
+var getDistanceHint = function (distance) {
+  if (distance<10){
+    return "freezing!";
+  } else if (distance< 20) {
+    return " really cold";
+  } else if (distance<40) {
+    return "cold";
+  } else if (distance<80) {
+    return "warm";
+  }  else if (distance< 160){
+    return "warmer";
+  } else if (distance<320){
+      return "very warmer";
+    }  else{
+      return "burning";
+    }
+  };
+
+var width = 400;
+var height = 400;
+var clicks = 0;
+
+var target = {
+  x: getRandomNumber(width),
+  y: getRandomNumber(height)
+
+};
+
+$("#map").click(function(event){
+  clicks++;
+  console.log("clicky");
+  var distance = getDistance(event, target);
+  console.log(distance);
+  var distanceHint = getDistanceHint(distance);
+  $("#distance").text(distanceHint);
+  if (distance < 8) {
+    alert ("mmkljfnlregnteogj" + clicks + " clicks");
+  }
+});
+
+</script>
+</body>
+</html>
