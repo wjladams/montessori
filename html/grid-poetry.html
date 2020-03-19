@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <title>Grid Poetry</title>
+  </head>
+  <body>
+    <h1>1. Input your settings</h1>
+    <h4>Text from book (will save from session to session)</h4>
+    <textarea id="poetry" rows="8" cols="80"></textarea>
+    <h4>Grid size</h4>
+    <input id="size" value="6"/></td></tr>
+    <hr>
+    <h1>2. Resulting Grid</h1>
+    <button type="button" name="submit" onclick="updateGrid();">Update grid</button>
+    <p>
+    <table id="grid" border="2" cellpadding="10">
+    </table>
+    <hr>
+    <h1>3. Create a poem</h1>
+    <h4>Input your poem using refs like A2, D3 (will save from session to session)</h4>
+    <textarea id="your_poem" rows="2" cols="80" oninput="updatePoem();"></textarea>
+    <h4>Your result</h4>
+    <div id="processed_poem"></div>
+    <script>
+      LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+      'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+      LETTERS_TO_NUMBERS = {
+        A:0, B:1, C:2, D:3, E:4, F:5, G:6,
+        H:7, I:8, J:9, K:10, L:11, M:12, N:13,
+        O:14, P:15, Q:16, R:17, S:18, T:19,
+        U:20, V:21, W:22, X:23, Y:24, Z:25
+      }
+      MATRIX = [];
+      size = 3;
+      function updateGrid() {
+        let text = document.getElementById("poetry").value;
+        size = document.getElementById("size").value;
+        localStorage.setItem("text", text);
+        localStorage.setItem("size", size);
+        let pieces = text.split(/[ \.\,\:;\!\n\t\?]+/);
+        MATRIX = pieces;
+        let mytable = "";
+        let count = 0;
+        //Make the header
+        mytable="<tr><th></th>\n";
+        for(let i=0; i < size; i++) {
+          mytable+="<th>"+LETTERS[i]+"</th>\n";
+        }
+        mytable+="</tr>\n";
+        for(let row=0; row < size; row++) {
+          let rtext = "<tr><th>"+(row+1)+"   </th>\n";
+          for(let col=0; col < size; col++) {
+            let data = "?";
+            if (count < pieces.length) {
+              data = pieces[count];
+            }
+            rtext += "\t<td>"+data+"</td>\n";
+            count+=1;
+          }
+          rtext+="</tr>\n";
+          mytable+=rtext;
+        }
+        let tbl = document.getElementById("grid");
+        updatePoem();
+        tbl.innerHTML = mytable;
+        console.log("Size="+pieces.length);
+        console.log("Raw poetry"+text);
+      }
+
+      function updatePoem() {
+        let poemtext = document.getElementById("your_poem").value;
+        localStorage.setItem("your_poem", poemtext);
+        let processed_poem = insertMatrixIntoString(poemtext, MATRIX, size);
+        document.getElementById("processed_poem").innerHTML = processed_poem;
+      }
+
+      function insertMatrixIntoString(mystring, oneDMatrix, size) {
+        let pieces = mystring.split(/[ \n\t]+/);
+        if (pieces == null) {
+          return null;
+        }
+        let rval="";
+        for(let i=0; i < pieces.length; i++) {
+          let s = pieces[i];
+          var mat = s.match(/([A-Z]+)([0-9]+)([\.\;\?\!]*)/);
+          if ((mat != null) && (mat.length > 2)) {
+            let col = LETTERS_TO_NUMBERS[mat[1]];
+            let row = mat[2]-1;
+            let pos = row*size+col;
+            s = oneDMatrix[pos];
+            if (mat.length > 3) {
+              s+=mat[3];
+            }
+          }
+          rval += s+" ";
+        }
+        return rval;
+      }
+    </script>
+    <script>
+    window.onload = function(){
+      let text = localStorage.getItem("text");
+      if ((text == null) || (text == "")) {
+        text = "we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way— in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only. There were a king with a large jaw and a queen with a plain face, on the throne of England; there were a king with a large jaw and a queen with a fair face, on the throne of France. In both countries it was clearer than crystal to the lords of the State preserves of loaves and fishes, that things in general were settled for ever. It was the year of Our Lord one thousand seven hundred and seventy-five. Spiritual revelations were conceded to England at that favoured period, as at this. Mrs. Southcott had recently attained her five-and-twentieth blessed birthday, of whom a prophetic private in the Life Guards had heralded the sublime appearance by announcing that arrangements were made for the swallowing up of London and Westminster. Even the Cock-lane ghost had been laid only a round dozen of years, after rapping out its messages, as the spirits of this very year last past (supernaturally deficient in originality) rapped out theirs. Mere messages in the earthly order of events had lately come to the English Crown and People, from a congress of British subjects in America: which, strange to relate, have proved more important to the human race than any communications yet received through any of the chickens of the Cock-lane brood.";
+      }
+      document.getElementById('poetry').innerHTML = text;
+      document.getElementById('size').innerHTML = localStorage.getItem("size");
+      document.getElementById('your_poem').innerHTML = localStorage.getItem("your_poem");
+      updateGrid();
+    };
+    </script>
+  </body>
+</html>
